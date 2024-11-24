@@ -10,10 +10,9 @@ import pathlib
 # )
 path = pathlib.Path(r'DB\user.db').resolve()
 # path = pathlib.Path(r'user.db').resolve()
-print(path)
 async_engine = create_async_engine(
     url=fr'sqlite+aiosqlite:///{path}',
-    echo=False
+    echo=True
 )
 
 async_session_factory = async_sessionmaker(async_engine)
