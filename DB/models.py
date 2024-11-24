@@ -41,3 +41,9 @@ class FavoriteOrm(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey('users.tg_id'))
     film_id: Mapped[int] = mapped_column(ForeignKey('films.film_id'))
 
+
+class AdminOrm(Base):
+    __tablename__ = 'admins'
+
+    id: Mapped[intpk]
+    tg_id = mapped_column(BigInteger, unique=True)

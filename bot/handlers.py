@@ -18,61 +18,28 @@ class Reg(StatesGroup):
 @router.message(CommandStart())
 async def start(message: Message):
     await rq.set_user(message.from_user.id)
-    # await message.answer(f'Hello\nYour id is {message.from_user.id}\nYour name is {message.from_user.first_name}')
-    await message.reply(
-        f"Hello\nYour id is {message.from_user.id}\nYour name is {message.from_user.first_name}",
-        reply_markup=kb.main,
-    )
+    await message.reply("Set user func is working")
 
 
-@router.message(Command("help"))
-async def start(message: Message):
-    await message.answer("Okay, ЦАО", reply_markup=kb.settings)
+@router.message(Command('admin'))
+async def admin_panel(message: Message):
+    # Use middleware to check if it is admin
+    await message.reply("Admin panel", reply_markup=kb.admin_panel)
 
 
-@router.message(F.text == "Bruh")
-async def start(message: Message):
-    await message.answer("fuck you")
+@router.callback_query(F.data == 'get_statistics_admin')
+async def get_statistics_admin(callback_query: CallbackQuery):
+    await callback_query.answer()
+    await callback_query.message.edit_text("Statistics", reply_markup=kb.admin_statistics)
 
 
-@router.message(F.photo)
-async def start(message: Message):
-    await message.answer(f"ID foto: {message.photo[-1].file_id}")
+@router.callback_query(F.data == 'get_films_admin')
+async def get_statistics_admin(callback_query: CallbackQuery):
+    await callback_query.answer()
+    await callback_query.message.edit_text("Films editor", reply_markup=kb.admin_films)
 
 
-@router.message(Command("get_photo"))
-async def get_photo(message: Message):
-    await message.answer_photo(
-        photo="AgACAgIAAxkBAAMMZ0Lum5oreuRUEZd5VWpA9JY2J0YAAnLpMRsk6BhKrPx3gnl4fTsBAAMCAAN5AAM2BA",
-        caption="This is a photo",
-    )
-
-
-@router.callback_query(F.data == 'catalog')
-async def catalog(callback: CallbackQuery):
-    await callback.answer('Chose catalog')
-    await callback.message.edit_text('Hello', reply_markup=await kb.inline_cars())
-
-
-@router.message(Command('reg'))
-async def reg_one(message: Message, state: FSMContext):
-    await state.set_state(Reg.name)
-    await message.answer('Введите ваше имя')
-
-
-@router.message(Reg.name)
-async def reg_second(message: Message, state: FSMContext):
-    await state.update_data(name=message.text)
-    await state.set_state(Reg.number)
-    await message.answer('Введите ваш номер телефона')
-
-
-@router.message(Reg.number)
-async def reg_third(message: Message, state: FSMContext):
-    await state.update_data(number=message.text)
-    data = await state.get_data()
-    await message.answer(f'Регистрация завершена!\n{data["name"], data["number"]}\n{data}')
-    await state.clear()
-
-
-
+@router.callback_query(F.data == 'main_menu_admin')
+async def get_statistics_admin(callback_query: CallbackQuery):
+    await callback_query.answer()
+    await callback_query.message.edit_text("Admin panel", reply_markup=kb.admin_panel)
