@@ -1,10 +1,12 @@
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped
 from typing_extensions import Annotated
+import datetime
 
 from DB.database import Base
 
 intpk = Annotated[int, mapped_column(primary_key=True, autoincrement=True)]
+created_at = Annotated[datetime.datetime, mapped_column(default=datetime.datetime.utcnow())]
 
 
 class UsersOrm(Base):
@@ -14,6 +16,7 @@ class UsersOrm(Base):
     user_name: Mapped[str] = mapped_column(String(255), unique=True)
     password: Mapped[str | None]
     age: Mapped[int | None]
+    created_at: Mapped[created_at]
 
 
 class FilmsOrm(Base):
@@ -27,6 +30,7 @@ class FilmsOrm(Base):
     source_trailer: Mapped[str | None]
     year: Mapped[int | None]
     age_limit: Mapped[int | None]
+    created_at: Mapped[created_at]
 
 
 class FavoritesOrm(Base):

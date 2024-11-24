@@ -1,6 +1,5 @@
-from DB.models import UsersOrm
+from DB.models import UsersOrm, FilmsOrm
 from DB.database import sync_engine, Base, session_factory
-
 
 
 def create_tables():
@@ -15,4 +14,11 @@ def insert_workers():
         worker_jack = UsersOrm(user_name="Jack")
         worker_michael = UsersOrm(user_name="Michael")
         session.add_all([worker_jack, worker_michael])
+        session.commit()
+
+
+def admin_insert_film(**kwargs):
+    with session_factory() as session:
+        new_film = FilmsOrm(**kwargs)
+        session.add(new_film)
         session.commit()

@@ -9,10 +9,6 @@ sync_engine = create_engine(
 
 session_factory = sessionmaker(sync_engine)
 
-str_256 = Annotated[str, 256]
-
 
 class Base(DeclarativeBase):
-    type_annotation_map = {
-        str_256: String(256)
-    }
+    pass
