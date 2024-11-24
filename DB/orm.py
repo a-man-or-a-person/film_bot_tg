@@ -2,6 +2,7 @@ from DB.models import UsersOrm
 from DB.database import sync_engine, Base, session_factory
 
 
+
 def create_tables():
     print("Creating")
     sync_engine.echo=True
