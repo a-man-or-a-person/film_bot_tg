@@ -1,24 +1,24 @@
-from DB.models import UsersOrm, FilmsOrm
-from DB.database import sync_engine, Base, session_factory
+from DB.models import UserOrm, FilmOrm
+from DB.database import async_engine, Base, async_session_factory
 
 
-def create_tables():
-    print("Creating")
-    sync_engine.echo=True
-    Base.metadata.drop_all(sync_engine)
-    Base.metadata.create_all(sync_engine)
+async def create_tables():
+    async with async_engine.connect() as conn:
+        async_engine.echo = True
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
 
 
-def insert_workers():
-    with session_factory() as session:
-        worker_jack = UsersOrm(user_name="Jack")
-        worker_michael = UsersOrm(user_name="Michael")
+async def insert_workers():
+    async with async_session_factory() as session:
+        worker_jack = UserOrm(user_name="Jack")
+        worker_michael = UserOrm(user_name="Michael")
         session.add_all([worker_jack, worker_michael])
-        session.commit()
+        await session.commit()
 
 
-def admin_insert_film(**kwargs):
-    with session_factory() as session:
-        new_film = FilmsOrm(**kwargs)
+async def admin_insert_film(**kwargs):
+    async with async_session_factory() as session:
+        new_film = FilmOrm(**kwargs)
         session.add(new_film)
-        session.commit()
+        await session.commit()
