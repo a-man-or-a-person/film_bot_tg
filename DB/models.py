@@ -14,7 +14,7 @@ class UserOrm(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, unique=True)
     tg_id = mapped_column(BigInteger, unique=True)
-    user_name: Mapped[str] = mapped_column(String(255), unique=True)
+    user_name: Mapped[str] = mapped_column(String(255), nullable=True)
     password: Mapped[str | None]
     age: Mapped[int | None]
     created_at: Mapped[created_at]

@@ -5,6 +5,7 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
 
 import bot.keyboard as kb
+import DB.requests as rq
 
 router = Router()
 
@@ -16,6 +17,7 @@ class Reg(StatesGroup):
 
 @router.message(CommandStart())
 async def start(message: Message):
+    await rq.set_user(message.from_user.id)
     # await message.answer(f'Hello\nYour id is {message.from_user.id}\nYour name is {message.from_user.first_name}')
     await message.reply(
         f"Hello\nYour id is {message.from_user.id}\nYour name is {message.from_user.first_name}",
