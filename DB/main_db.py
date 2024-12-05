@@ -9,5 +9,6 @@ async def main():
     # await insert_workers()
     # await admin_insert_film(**{'name': 'Django', 'source_film': 'https://git'})
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     asyncio.run(main())
