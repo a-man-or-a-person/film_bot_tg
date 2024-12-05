@@ -1,8 +1,8 @@
-from aiogram.filters import CommandStart, Command
-from aiogram.types import Message, CallbackQuery
 from aiogram import F, Router
-from aiogram.fsm.state import StatesGroup, State
+from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.types import CallbackQuery, Message
 
 import bot.fsm_classes as fsm_cl
 import bot.keyboards.admin_keyboard as kb

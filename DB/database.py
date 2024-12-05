@@ -1,19 +1,32 @@
-from sqlalchemy import create_engine, String
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncAttrs
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
-from typing_extensions import Annotated
+import os
 import pathlib
 
-# sync_engine = create_engine(
-#     url='sqlite:///user.db',
-#     echo=True
-# )
-path = pathlib.Path(r"DB\user.db").resolve()
-# path = pathlib.Path(r'user.db').resolve()
-async_engine = create_async_engine(url=rf"sqlite+aiosqlite:///{path}", echo=True)
+from dotenv import load_dotenv
+from sqlalchemy import String, create_engine
+from sqlalchemy.ext.asyncio import (AsyncAttrs, async_sessionmaker,
+                                    create_async_engine)
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from typing_extensions import Annotated
+
+from DB.link_creation import connection_link
+
+
+load_dotenv()
+if os.getenv('SELECTED_DB') == 'POSTGRES':
+    async_engine = create_async_engine(
+        url=connection_link(),
+        echo=True,
+    )
+else:
+    path = pathlib.Path(r"DB\user.db").resolve()
+
+    async_engine = create_async_engine(
+        url=rf"sqlite+aiosqlite:///{path}",
+        echo=True
+    )
 
 async_session_factory = async_sessionmaker(async_engine)
 
 
-class Base(AsyncAttrs, DeclarativeBase):
+class Base(DeclarativeBase):
     pass

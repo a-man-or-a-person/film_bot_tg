@@ -1,8 +1,8 @@
 import asyncio
-import os
-import dotenv
 import logging
+import os
 
+import dotenv
 from aiogram import Bot, Dispatcher
 
 from bot.handlers.admin_handler import router
