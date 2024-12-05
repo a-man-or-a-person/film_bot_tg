@@ -6,11 +6,13 @@ import datetime
 from DB.database import Base
 
 intpk = Annotated[int, mapped_column(primary_key=True, autoincrement=True)]
-created_at = Annotated[datetime.datetime, mapped_column(default=datetime.datetime.utcnow())]
+created_at = Annotated[
+    datetime.datetime, mapped_column(default=datetime.datetime.utcnow())
+]
 
 
 class UserOrm(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True, unique=True)
     tg_id = mapped_column(BigInteger, unique=True)
@@ -21,7 +23,7 @@ class UserOrm(Base):
 
 
 class FilmOrm(Base):
-    __tablename__ = 'films'
+    __tablename__ = "films"
 
     film_id: Mapped[intpk]
     name: Mapped[str]
@@ -35,15 +37,15 @@ class FilmOrm(Base):
 
 
 class FavoriteOrm(Base):
-    __tablename__ = 'favorites'
+    __tablename__ = "favorites"
 
     id: Mapped[intpk]
-    user_id: Mapped[int] = mapped_column(ForeignKey('users.tg_id'))
-    film_id: Mapped[int] = mapped_column(ForeignKey('films.film_id'))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.tg_id"))
+    film_id: Mapped[int] = mapped_column(ForeignKey("films.film_id"))
 
 
 class AdminOrm(Base):
-    __tablename__ = 'admins'
+    __tablename__ = "admins"
 
     id: Mapped[intpk]
     tg_id = mapped_column(BigInteger, unique=True)
