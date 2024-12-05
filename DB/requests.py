@@ -1,6 +1,7 @@
+from sqlalchemy import delete, insert, select, update
+
 from DB.database import async_session_factory
-from DB.models import UserOrm, FilmOrm, FavoriteOrm
-from sqlalchemy import select, update, delete, insert
+from DB.models import FavoriteOrm, FilmOrm, UserOrm
 
 
 async def set_user(tg_id: int) -> None:
@@ -25,6 +26,9 @@ async def delete_film(film_id: int) -> None:
 
 
 async def add_film(**kwargs) -> None:
+    '''
+    Some explanations
+    '''
     async with async_session_factory() as session:
         new_film = FilmOrm(**kwargs)
         session.add(new_film)

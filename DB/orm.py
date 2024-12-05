@@ -1,5 +1,5 @@
-from DB.models import UserOrm, FilmOrm
-from DB.database import async_engine, Base, async_session_factory
+from DB.database import Base, async_engine, async_session_factory
+from DB.models import FilmOrm, UserOrm
 
 
 async def create_tables():
@@ -7,6 +7,7 @@ async def create_tables():
         async_engine.echo = True
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
+        await conn.commit()
 
 
 async def insert_workers():

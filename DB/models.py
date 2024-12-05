@@ -1,7 +1,8 @@
-from sqlalchemy import String, ForeignKey, BigInteger
-from sqlalchemy.orm import mapped_column, Mapped
-from typing_extensions import Annotated
 import datetime
+
+from sqlalchemy import BigInteger, ForeignKey, String
+from sqlalchemy.orm import Mapped, mapped_column
+from typing_extensions import Annotated
 
 from DB.database import Base
 
@@ -19,7 +20,7 @@ class UserOrm(Base):
     user_name: Mapped[str] = mapped_column(String(255), nullable=True)
     password: Mapped[str | None]
     age: Mapped[int | None]
-    created_at: Mapped[created_at]
+    # created_at: Mapped[created_at]
 
 
 class FilmOrm(Base):
@@ -33,7 +34,7 @@ class FilmOrm(Base):
     source_trailer: Mapped[str | None]
     year: Mapped[int | None]
     age_limit: Mapped[int | None]
-    created_at: Mapped[created_at]
+    # created_at: Mapped[created_at]
 
 
 class FavoriteOrm(Base):

@@ -1,16 +1,16 @@
-from aiogram import F, Router  # импорт классов
-from aiogram.filters import CommandStart, Command
-from aiogram.types import Message, CallbackQuery
-import bot.keyboards.user_keyboards as kb
+import os
 import random
-import aiohttp
 
+import aiohttp
+from aiogram import F, Router  # импорт классов
+from aiogram.filters import Command, CommandStart
+from aiogram.fsm.context import FSMContext
 # fsm состояния
 from aiogram.fsm.state import State, StatesGroup
-from aiogram.fsm.context import FSMContext
-
+from aiogram.types import CallbackQuery, Message
 from dotenv import load_dotenv
-import os
+
+import bot.keyboards.user_keyboards as kb
 
 load_dotenv()
 
