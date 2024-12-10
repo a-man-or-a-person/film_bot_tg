@@ -15,7 +15,8 @@ film_router = Router()
 @film_router.callback_query(F.data == "delete_film_admin")
 async def delete_film_admin_init(callback_query: CallbackQuery, state: FSMContext):
     await state.set_state(fsm_cl.Film_deletion.film_id)
-    await callback_query.answer("Send film id")
+    await callback_query.message.answer("Send film id")
+    await callback_query.answer()
 
 
 @film_router.message(fsm_cl.Film_deletion.film_id)
@@ -31,7 +32,8 @@ async def delete_film_admin_get_id(message: Message, state: FSMContext):
 @film_router.callback_query(F.data == "add_film_admin")
 async def add_film_admin_init(callback_query: CallbackQuery, state: FSMContext):
     await state.set_state(fsm_cl.Film_addition.name)
-    await callback_query.answer("Send film name")
+    await callback_query.message.answer("Send film name")
+    await callback_query.answer()
 
 
 @film_router.message(fsm_cl.Film_addition.name)
