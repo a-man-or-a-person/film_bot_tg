@@ -6,8 +6,8 @@ import dotenv
 from aiogram import Bot, Dispatcher
 
 from bot.handlers.admin_handler import admin_router
-from bot.handlers.user_handler import user_router
 from bot.handlers.film_actions_handler import film_router
+from bot.handlers.user_handler import user_router
 
 
 async def main():

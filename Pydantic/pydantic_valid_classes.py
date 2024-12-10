@@ -1,5 +1,6 @@
-from pydantic import BaseModel, TypeAdapter, ValidationError
 from typing_extensions import TypedDict
+
+from pydantic import BaseModel, TypeAdapter, ValidationError
 
 
 class Film(TypedDict):
@@ -10,5 +11,3 @@ class Film(TypedDict):
     source_trailer: str
     year: int
     age_limit: int
-
-

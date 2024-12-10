@@ -1,6 +1,5 @@
-from pydantic import BaseModel, TypeAdapter, ValidationError
-
 from DB.requests import add_film
+from pydantic import BaseModel, TypeAdapter, ValidationError
 from Pydantic.pydantic_valid_classes import Film
 
 

@@ -2,10 +2,9 @@ from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
-from Pydantic import pydantic_valid_classes as pyd_val
-
 import bot.fsm_classes as fsm_cl
 import DB.requests as rq
+from Pydantic import pydantic_valid_classes as pyd_val
 from Pydantic.pydantic_validation import validate_film
 
 film_router = Router()

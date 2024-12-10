@@ -7,6 +7,7 @@ from aiogram.types import CallbackQuery, Message
 import bot.fsm_classes as fsm_cl
 import bot.keyboards.admin_keyboard as kb
 import DB.requests as rq
+from bot.wrappers import admin_authentication
 
 admin_router = Router()
 
@@ -19,10 +20,11 @@ class Reg(StatesGroup):
 @admin_router.message(CommandStart())
 async def start(message: Message):
     await rq.set_user(message.from_user.id)
-    await message.reply("Set user func is working")
+    await message.reply(f"Set user func is working, {message.from_user.id}")
 
 
 @admin_router.message(Command("admin"))
+@admin_authentication
 async def admin_panel(message: Message):
     # Use middleware to check if it is admin
     await message.reply("Admin panel", reply_markup=kb.admin_panel)
@@ -46,4 +48,3 @@ async def get_statistics_admin(callback_query: CallbackQuery):
 async def get_statistics_admin(callback_query: CallbackQuery):
     await callback_query.answer()
     await callback_query.message.edit_text("Admin panel", reply_markup=kb.admin_panel)
-
