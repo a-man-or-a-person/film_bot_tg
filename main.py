@@ -5,8 +5,9 @@ import os
 import dotenv
 from aiogram import Bot, Dispatcher
 
-from bot.handlers.admin_handler import router
+from bot.handlers.admin_handler import admin_router
 from bot.handlers.user_handler import user_router
+from bot.handlers.film_actions_handler import film_router
 
 
 async def main():
@@ -14,8 +15,9 @@ async def main():
     bot = Bot(token=os.getenv("BOT_TOKEN"))
     dp = Dispatcher()
 
-    dp.include_router(router)
-    dp.include_router()
+    dp.include_router(admin_router)
+    dp.include_router(user_router)
+    dp.include_router(film_router)
     await dp.start_polling(bot)
 
 
