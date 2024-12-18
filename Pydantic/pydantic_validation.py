@@ -21,4 +21,4 @@ async def get_film_by_code_validator(**kwargs):
         # Handler
     except ValidationError as e:
         print(e)
-        return 'error'
+        return 'Wrong film code'

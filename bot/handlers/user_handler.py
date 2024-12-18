@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 import bot.fsm_classes as fsm_cl
 import bot.keyboards.user_keyboards as kb
 import Pydantic.pydantic_validation as pd_val
+import DB.requests as rq
 
 load_dotenv()
 
@@ -33,6 +34,7 @@ user_router = Router()
 
 @user_router.message(CommandStart())
 async def cmd_start(message: Message):
+    await rq.set_user(message.from_user.id)
     await message.answer(
         f"Приветствуем вас в нашем КиноБоте! {message.from_user.first_name}",
         reply_markup=kb.main,
@@ -70,6 +72,18 @@ async def get_film_code(message: Message, state: FSMContext):
     a = await pd_val.get_film_by_code_validator(**data)
     await message.reply(a)
     await state.clear()
+
+
+@user_router.message(F.text == "РАНДОМНЫЙ ФИЛЬМ")
+async def random_movie(message: Message):
+    films = await rq.get_random_films(10)
+    await message.answer(films)
+
+
+
+
+
+
 
 
 @user_router.message(F.text == "РАНДОМНЫЙ ФИЛЬМ")

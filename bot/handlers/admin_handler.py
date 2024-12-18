@@ -17,11 +17,6 @@ class Reg(StatesGroup):
     number = State()
 
 
-# @admin_router.message(CommandStart())
-# async def start(message: Message):
-#     await rq.set_user(message.from_user.id)
-#     await message.reply(f"Set user func is working, {message.from_user.id}")
-
 
 @admin_router.message(Command("admin"))
 @admin_authentication
@@ -48,3 +43,11 @@ async def get_statistics_admin(callback_query: CallbackQuery):
 async def get_statistics_admin(callback_query: CallbackQuery):
     await callback_query.answer()
     await callback_query.message.edit_text("Admin panel", reply_markup=kb.admin_panel)
+
+
+# Test
+@admin_router.message(Command("films"))
+async def test(message: Message):
+    res = await rq.get_films()
+    print(res)
+    await message.answer(str(res))
