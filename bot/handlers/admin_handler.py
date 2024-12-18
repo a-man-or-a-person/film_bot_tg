@@ -17,10 +17,10 @@ class Reg(StatesGroup):
     number = State()
 
 
-@admin_router.message(CommandStart())
-async def start(message: Message):
-    await rq.set_user(message.from_user.id)
-    await message.reply(f"Set user func is working, {message.from_user.id}")
+# @admin_router.message(CommandStart())
+# async def start(message: Message):
+#     await rq.set_user(message.from_user.id)
+#     await message.reply(f"Set user func is working, {message.from_user.id}")
 
 
 @admin_router.message(Command("admin"))

@@ -11,3 +11,7 @@ class Film(TypedDict):
     source_trailer: str
     year: int
     age_limit: int
+
+
+class FilmCode(BaseModel):
+    film_id: int
