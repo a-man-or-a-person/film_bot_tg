@@ -26,9 +26,9 @@ async def delete_film(film_id: int) -> None:
 
 
 async def add_film(**kwargs) -> None:
-    '''
+    """
     Some explanations
-    '''
+    """
     async with async_session_factory() as session:
         new_film = FilmOrm(**kwargs)
         session.add(new_film)
