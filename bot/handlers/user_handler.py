@@ -76,7 +76,7 @@ async def get_film_code(message: Message, state: FSMContext):
 
 @user_router.message(F.text == "РАНДОМНЫЙ ФИЛЬМ")
 async def random_movie(message: Message):
-    films = await rq.get_random_films(10)
+    films = await rq.get_random_films(2)
     await message.answer(films)
 
 

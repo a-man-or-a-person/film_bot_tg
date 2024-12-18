@@ -40,22 +40,15 @@ async def add_film(**kwargs) -> None:
 
 async def get_random_films(amount: int) -> str:
     async with async_session_factory() as session:
-        ids = await session.scalar(select(FilmOrm.film_id))
-        print('ids:', ids)
-        # random_ids = random.sample(ids, amount)
-        # print(random_ids)
-        films = select(FilmOrm.name, FilmOrm.film_id).where(FilmOrm.film_id.in_((3, 2)))
+        ids = [x[0] for x in await session.execute(select(FilmOrm.film_id))]
+        random_ids = random.sample(ids, amount)
+        films = select(FilmOrm.name, FilmOrm.film_id).where(FilmOrm.film_id.in_(random_ids))
         films = await session.execute(films)
-        # print(list(films))
         return '\n'.join(map(lambda x: '\t'.join(map(str, x)), films))
-
 
 
 async def get_films() -> str:
     async with async_session_factory() as session:
         films = select(FilmOrm.film_id, FilmOrm.name, FilmOrm.source_film).select_from(FilmOrm)
         films = await session.execute(films)
-        # print('films:', list(films))
-        # print('films:', list(map(lambda x: x, list(films))))
         return '\n'.join(list(map(lambda x: '\t'.join(map(str, x)), list(films))))
-
