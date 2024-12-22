@@ -17,7 +17,6 @@ class Reg(StatesGroup):
     number = State()
 
 
-
 @admin_router.message(Command("admin"))
 @admin_authentication
 async def admin_panel(message: Message):
