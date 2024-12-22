@@ -13,3 +13,7 @@ class Film_addition(StatesGroup):
     source_trailer = State()
     year = State()
     age_limit = State()
+
+
+class FilmCode(StatesGroup):
+    film_id = State()

@@ -1,5 +1,9 @@
-from aiogram.types import (InlineKeyboardButton, InlineKeyboardMarkup,
-                           KeyboardButton, ReplyKeyboardMarkup)
+from aiogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    KeyboardButton,
+    ReplyKeyboardMarkup,
+)
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 
 main = ReplyKeyboardMarkup(
@@ -13,7 +17,7 @@ main = ReplyKeyboardMarkup(
 
 code_film_menu = ReplyKeyboardMarkup(
     keyboard=[
-        [KeyboardButton(text="РАНДОМНЫЙ ФИЛЬМ"), KeyboardButton(text="ЛУЧШИЕ СЕГОДНЯ")],
+        [KeyboardButton(text="РАНДОМНЫЙ ФИЛЬМ"), KeyboardButton(text="ЛУЧШИЕ")],
         [KeyboardButton(text="⬅️Назад")],
     ],
     resize_keyboard=True,
