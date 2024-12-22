@@ -3,7 +3,7 @@ from typing_extensions import TypedDict
 from pydantic import BaseModel, Field, TypeAdapter, ValidationError, validator
 
 
-class Film(TypedDict):
+class Film(BaseModel):
     name: str
     description: str
     genre: str

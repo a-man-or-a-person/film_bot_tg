@@ -82,6 +82,6 @@ async def add_film_admin_set_age_limit(message: Message, state: FSMContext):
     await state.update_data(age_limit=message.text)
     data = await state.get_data()
 
-    await validate_film(**data)
-    await message.reply("Film added")
+    ans = await validate_film(**data)
+    await message.answer(ans)
     await state.clear()

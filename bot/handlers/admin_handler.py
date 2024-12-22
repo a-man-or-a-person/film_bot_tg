@@ -43,10 +43,3 @@ async def get_statistics_admin(callback_query: CallbackQuery):
     await callback_query.answer()
     await callback_query.message.edit_text("Admin panel", reply_markup=kb.admin_panel)
 
-
-# Test
-@admin_router.message(Command("films"))
-async def test(message: Message):
-    res = await rq.get_films()
-    print(res)
-    await message.answer(str(res))
