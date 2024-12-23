@@ -1,6 +1,6 @@
 from typing_extensions import TypedDict
 
-from pydantic import BaseModel, Field, TypeAdapter, ValidationError, validator
+from pydantic import BaseModel, Field, TypeAdapter, ValidationError, validator, AnyUrl
 
 
 class Film(BaseModel):
@@ -27,7 +27,12 @@ class FilmGenres(BaseModel):
     genre: str = Field(alias="name")
 
 
-class APIKinoposikMovie(BaseModel):
+class KinopoiskFilmPoster(BaseModel):
+    url: AnyUrl
+    previewUrl: AnyUrl
+
+
+class APIKinopoiskMovie(BaseModel):
     id: int
     name: str
     year: int
@@ -36,6 +41,7 @@ class APIKinoposikMovie(BaseModel):
     rating: FilmRating
     ageRating: int
     genres: list[FilmGenres]
+    poster: KinopoiskFilmPoster
 
     @validator("description", *["shortDescription"])
     def transfirm_description(cls, value):
@@ -43,4 +49,10 @@ class APIKinoposikMovie(BaseModel):
 
 
 class ListFilms(BaseModel):
-    films: list[APIKinoposikMovie] = Field(alias="docs")
+    films: list[APIKinopoiskMovie] = Field(alias="docs")
+
+
+class KinopoiskFilmOut(BaseModel):
+    poster: AnyUrl
+    description: str
+

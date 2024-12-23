@@ -78,10 +78,13 @@ async def get_film_code(message: Message, state: FSMContext):
 @user_router.message(F.text == "ЛУЧШИЕ")
 async def random_movie(message: Message):
     films = await get_best_films()
-    await message.answer(films)
+    for film in films:
+        await message.answer_photo(str(film.poster), caption=film.description)
 
 
 @user_router.message(F.text == "РАНДОМНЫЙ ФИЛЬМ")
 async def random_movie(message: Message):
-    answer = await get_random_films()
-    await message.answer(answer)
+    films = await get_random_films()
+    for film in films:
+        await message.answer_photo(str(film.poster), caption=film.description)
+

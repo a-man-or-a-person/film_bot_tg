@@ -6,11 +6,11 @@ import urllib.parse
 import dotenv
 import requests
 
-from Pydantic.pydantic_valid_classes import APIKinoposikMovie
+from Pydantic.pydantic_valid_classes import APIKinopoiskMovie, KinopoiskFilmOut
 from Pydantic.pydantic_validation import films_sec_val
 
 
-async def get_films_by_params(**kwargs) -> list[APIKinoposikMovie]:
+async def get_films_by_params(**kwargs) -> list[APIKinopoiskMovie]:
     dotenv.load_dotenv()
     flattened_params = []
     for key, value in kwargs.items():
@@ -31,22 +31,21 @@ async def get_films_by_params(**kwargs) -> list[APIKinoposikMovie]:
     return data
 
 
-async def get_random_films() -> str:
+async def get_random_films() -> list[KinopoiskFilmOut]:
     params = {
         "page": str(random.randint(1, 200)),
-        "notNullFields": ["name", "shortDescription", "genres.name"],
+        "notNullFields": ["name", "shortDescription", "genres.name", "ageRating", "poster.url"],
         "type": "movie",
         "limit": "5",
     }
-
     data = await get_films_by_params(**params)
     return await user_string_prep(data)
 
 
-async def get_best_films() -> str:
+async def get_best_films() -> list[KinopoiskFilmOut]:
     params = {
         "page": str(random.randint(1, 50)),
-        "notNullFields": ["name", "shortDescription", "genres.name"],
+        "notNullFields": ["name", "shortDescription", "genres.name", "ageRating", "poster.url"],
         "type": "movie",
         "limit": "5",
         "rating.kp": "7.5-10",
@@ -57,11 +56,10 @@ async def get_best_films() -> str:
     return await user_string_prep(data)
 
 
-async def user_string_prep(films: list[APIKinoposikMovie]) -> str:
-    output = ""
-    print(films)
+async def user_string_prep(films: list[APIKinopoiskMovie]) -> list[KinopoiskFilmOut]:
+    output = []
     for film in films:
-        output += (
+        film_desc = (
             f"Name: {film.name}\n"
             f"Description: {film.shortDescription}\n"
             f"Year: {film.year}\n"
@@ -71,8 +69,8 @@ async def user_string_prep(films: list[APIKinoposikMovie]) -> str:
             f"\n\timdb:{round(film.rating.imdb, 1)}\n"
             f'Genres: {", ".join([film.genre for film in film.genres])}'
         )
-        output += "\n\n"
-
+        film_desc += "\n\n"
+        output.append(KinopoiskFilmOut(**{'poster': film.poster.url, 'description': film_desc}))
     return output
 
 

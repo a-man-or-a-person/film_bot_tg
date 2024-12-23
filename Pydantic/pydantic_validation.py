@@ -25,6 +25,7 @@ async def get_film_by_code_validator(**kwargs):
 
 async def films_sec_val(**kwargs):
     try:
+
         films = ListFilms(**kwargs)
         return films.films
     except ValidationError as e:
