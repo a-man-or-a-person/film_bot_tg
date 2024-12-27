@@ -1,6 +1,7 @@
 from typing_extensions import TypedDict
 
-from pydantic import BaseModel, Field, TypeAdapter, ValidationError, validator, AnyUrl
+from pydantic import (AnyUrl, BaseModel, Field, TypeAdapter, ValidationError,
+                      validator)
 
 
 class Film(BaseModel):
@@ -56,3 +57,6 @@ class KinopoiskFilmOut(BaseModel):
     poster: AnyUrl
     description: str
 
+
+class AdminAddDelModel(BaseModel):
+    admin_tg_id: int

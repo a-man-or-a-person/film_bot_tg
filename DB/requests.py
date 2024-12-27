@@ -1,10 +1,10 @@
 import random
-from typing import List, Tuple
+from typing import List, Set, Tuple
 
 from sqlalchemy import delete, insert, select, update
 
 from DB.database import async_session_factory
-from DB.models import FavoriteOrm, FilmOrm, UserOrm
+from DB.models import AdminOrm, FavoriteOrm, FilmOrm, UserOrm
 
 
 async def set_user(tg_id: int) -> None:
@@ -56,3 +56,29 @@ async def get_films() -> str:
         )
         films = await session.execute(films)
         return "\n".join(list(map(lambda x: "\t".join(map(str, x)), list(films))))
+
+
+async def get_admins() -> Set[int]:
+    async with async_session_factory() as session:
+        admins = select(AdminOrm.tg_id).select_from(AdminOrm)
+        admins = await session.execute(admins)
+        res = {x[0] for x in admins}
+        return res
+
+
+async def add_admin(admin_id) -> None:
+    async with async_session_factory() as session:
+        admin = AdminOrm(tg_id=admin_id)
+        session.add(admin)
+        await session.commit()
+
+
+async def del_admin(admin_id: int) -> None:
+    async with async_session_factory() as session:
+        stmt = select(AdminOrm).where(AdminOrm.tg_id == admin_id)
+        result = await session.execute(stmt)
+        selected_admin = result.scalar_one_or_none()
+
+        if selected_admin:
+            await session.delete(selected_admin)
+            await session.commit()

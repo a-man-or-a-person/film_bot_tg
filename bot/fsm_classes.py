@@ -17,3 +17,11 @@ class Film_addition(StatesGroup):
 
 class FilmCode(StatesGroup):
     film_id = State()
+
+
+class AdminAdd(StatesGroup):
+    admin_tg_id = State()
+
+
+class AdminDel(StatesGroup):
+    admin_tg_id = State()
