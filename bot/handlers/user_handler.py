@@ -13,7 +13,7 @@ import bot.fsm_classes as fsm_cl
 import bot.keyboards.user_keyboards as kb
 import DB.requests as rq
 import Pydantic.pydantic_validation as pd_val
-from apis.kinopoisk import get_best_films, get_random_films
+from apis.kinopoisk import get_best_films, get_random_films, get_film_by_id
 
 load_dotenv()
 
@@ -52,7 +52,7 @@ async def back_to_main_menu(message: Message, state: FSMContext):
 
 @user_router.message(F.text == "ПОДДЕРЖКА")
 async def support(message: Message):
-    await message.answer(f"По всем вопросам и предложениям пишите: @Smt_good, @fucject")
+    await message.answer(f"По всем вопросам и предложениям пишите: @Smt_good")
 
 
 @user_router.message(Command("help"))
@@ -70,8 +70,9 @@ async def get_film_code_from_user(message: Message, state: FSMContext):
 async def get_film_code(message: Message, state: FSMContext):
     await state.update_data(film_id=message.text)
     data = await state.get_data()
-    a = await pd_val.get_film_by_code_validator(**data)
-    await message.reply(a)
+    films = await get_film_by_id(**data)
+    for film in films:
+        await message.answer_photo(str(film.poster), caption=film.description)
     await state.clear()
 
 

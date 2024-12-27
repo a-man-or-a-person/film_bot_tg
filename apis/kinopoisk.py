@@ -7,11 +7,10 @@ import dotenv
 import requests
 
 from Pydantic.pydantic_valid_classes import APIKinopoiskMovie, KinopoiskFilmOut
-from Pydantic.pydantic_validation import films_sec_val
+from Pydantic.pydantic_validation import films_sec_val, film_code_val
 
 
-async def get_films_by_params(**kwargs) -> list[APIKinopoiskMovie]:
-    dotenv.load_dotenv()
+async def flatten_params(**kwargs):
     flattened_params = []
     for key, value in kwargs.items():
         if isinstance(value, list):
@@ -19,7 +18,12 @@ async def get_films_by_params(**kwargs) -> list[APIKinopoiskMovie]:
                 flattened_params.append((key, item))
         else:
             flattened_params.append((key, value))
+    return flattened_params
 
+
+async def get_films_by_params(**kwargs) -> list[APIKinopoiskMovie]:
+    dotenv.load_dotenv()
+    flattened_params = await flatten_params(**kwargs)
     url = "https://api.kinopoisk.dev/v1.4/movie"
     url = f"{url}?{urllib.parse.urlencode(flattened_params)}"
     headers = {
@@ -29,6 +33,23 @@ async def get_films_by_params(**kwargs) -> list[APIKinopoiskMovie]:
     response = requests.get(url, headers=headers)
     data = await films_sec_val(**response.json())
     return data
+
+
+async def get_film_by_id(**kwargs):
+    film_id = await film_code_val(**kwargs)
+    dotenv.load_dotenv()
+    params = {}
+    flattened_params = await flatten_params(**params)
+    url = f"https://api.kinopoisk.dev/v1.4/movie/{film_id}"
+
+    url = f"{url}?{urllib.parse.urlencode(flattened_params)}"
+    headers = {
+        "accept": "application/json",
+        "X-API-KEY": os.getenv("KINOPOISK_API_KEY"),
+    }
+    response = requests.get(url, headers=headers)
+    film = APIKinopoiskMovie(**response.json())
+    return await user_string_prep([film])
 
 
 async def get_random_films() -> list[KinopoiskFilmOut]:
