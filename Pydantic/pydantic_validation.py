@@ -13,12 +13,10 @@ async def validate_film(**kwargs):
         return str(e)
 
 
-async def get_film_by_code_validator(**kwargs):
+async def film_code_val(**kwargs):
     try:
         film_code = FilmCode(**kwargs)
-        print(film_code)
-        return "success"
-        # Handler
+        return film_code.film_id
     except ValidationError as e:
         print(e)
         return "Wrong film code"
@@ -26,7 +24,6 @@ async def get_film_by_code_validator(**kwargs):
 
 async def films_sec_val(**kwargs):
     try:
-
         films = ListFilms(**kwargs)
         return films.films
     except ValidationError as e:
