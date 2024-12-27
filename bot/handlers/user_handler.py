@@ -87,4 +87,3 @@ async def random_movie(message: Message):
     films = await get_random_films()
     for film in films:
         await message.answer_photo(str(film.poster), caption=film.description)
-

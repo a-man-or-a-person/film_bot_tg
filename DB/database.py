@@ -3,7 +3,8 @@ import pathlib
 
 from dotenv import load_dotenv
 from sqlalchemy import String, create_engine
-from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import (AsyncAttrs, async_sessionmaker,
+                                    create_async_engine)
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from typing_extensions import Annotated
 

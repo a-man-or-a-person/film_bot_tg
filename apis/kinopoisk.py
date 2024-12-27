@@ -34,7 +34,13 @@ async def get_films_by_params(**kwargs) -> list[APIKinopoiskMovie]:
 async def get_random_films() -> list[KinopoiskFilmOut]:
     params = {
         "page": str(random.randint(1, 200)),
-        "notNullFields": ["name", "shortDescription", "genres.name", "ageRating", "poster.url"],
+        "notNullFields": [
+            "name",
+            "shortDescription",
+            "genres.name",
+            "ageRating",
+            "poster.url",
+        ],
         "type": "movie",
         "limit": "5",
     }
@@ -45,7 +51,13 @@ async def get_random_films() -> list[KinopoiskFilmOut]:
 async def get_best_films() -> list[KinopoiskFilmOut]:
     params = {
         "page": str(random.randint(1, 50)),
-        "notNullFields": ["name", "shortDescription", "genres.name", "ageRating", "poster.url"],
+        "notNullFields": [
+            "name",
+            "shortDescription",
+            "genres.name",
+            "ageRating",
+            "poster.url",
+        ],
         "type": "movie",
         "limit": "5",
         "rating.kp": "7.5-10",
@@ -70,7 +82,9 @@ async def user_string_prep(films: list[APIKinopoiskMovie]) -> list[KinopoiskFilm
             f'Genres: {", ".join([film.genre for film in film.genres])}'
         )
         film_desc += "\n\n"
-        output.append(KinopoiskFilmOut(**{'poster': film.poster.url, 'description': film_desc}))
+        output.append(
+            KinopoiskFilmOut(**{"poster": film.poster.url, "description": film_desc})
+        )
     return output
 
 
