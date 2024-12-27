@@ -37,9 +37,8 @@ admin_add_del_kb = InlineKeyboardMarkup(
             InlineKeyboardButton(text="Delete admin", callback_data="del_admin"),
         ],
         [
-            InlineKeyboardButton(
-                text="Show all current admins", callback_data="get_admins_ids"
-            ),
+            InlineKeyboardButton(text="Show all current admins", callback_data="get_admins_ids"),
+            InlineKeyboardButton(text="Admin panel", callback_data="main_menu_admin")
         ],
     ]
 )
