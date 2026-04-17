@@ -43,17 +43,3 @@ The project follows a modular architecture, separating the command handling, API
 
 ## Database Schema
 The database stores user interactions, film data, and user preferences in structured tables. Ensure the database is initialized before running the bot.
-
-## Logging
-All interactions with the bot are logged for analysis and debugging. Logs can be found in the `logs` directory, categorized by date.
-
-## Error Handling
-The bot is equipped with error handling mechanisms to provide feedback to users and ensure smooth operation. In case of an error, the bot will report the issue gracefully without crashing.
-
-## Contribution Guidelines
-- Fork the repository and create a new branch for each feature or bug fix.
-- Ensure tests are written for any new functionality.
-- Submit a pull request describing your changes.
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
