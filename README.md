@@ -1,100 +1,59 @@
-🔺Техническое задание (ТЗ) для проекта Telegram-бота "Кино Бот"
+# Film Bot Telegram
 
-🔺Цель проекта:
-Создать Telegram-бота для поиска фильмов, рекомендации фильмов для вечера, и фильмов по тематике с интеграцией пользовательской и административной частей.
+## Introduction
+This project is a Telegram bot designed to assist users in discovering and managing their film watching experience. It provides users with film recommendations, information about films, and allows users to track their watched films.
 
-💤Общие требования:
-1.Использовать библиотеку aiogram.
-2.Хранение данных в SQLite.
-3.Поддержка многопоточности для быстрого отклика бота.
-4.Логирование всех действий для отслеживания ошибок и работы с аналитикой.
+## Features
+- Film recommendations based on user preferences.
+- Search functionality for films and TV shows.
+- Track watched films and manage lists.
+- User-friendly interface with quick commands.
+- Logging for tracking user interactions.
 
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/a-man-or-a-person/film_bot_tg.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd film_bot_tg
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Set up environment variables as needed.
 
-📱Распределение задач
-Человек 1: Пользовательская часть
-Человек 2: Административная часть
+## Usage
+- Start the bot by running:
+   ```bash
+   python bot.py
+   ```
+- Interact with the bot through your Telegram application using the command `/start` to initiate the conversation.
 
-Функционал и задачи
-(1. Пользовательская часть
-Ответственный: Павел Сергеевич)
+## Architecture
+The project follows a modular architecture, separating the command handling, API communication, and database interactions into individual modules. This promotes clear separation of concerns and easier maintenance.
 
-1)🔺Поиск фильма по коду
+## Technologies
+- Python 3.x
+- [Python Telegram Bot](https://python-telegram-bot.readthedocs.io/)
+- SQLAlchemy for database management
+- Requests for API interactions
 
-1.Раздел в меню, где пользователь вводит код фильма и получает данные о нём (название, описание, жанр).
-2.Настроить обработку запросов и ответов.
+## Database Schema
+The database stores user interactions, film data, and user preferences in structured tables. Ensure the database is initialized before running the bot.
 
-2)🟠Рандомное кино на вечер
+## Logging
+All interactions with the bot are logged for analysis and debugging. Logs can be found in the `logs` directory, categorized by date.
 
-1.Реализовать генерацию случайного фильма из базы данных.
-2.В выдаче отображать: название, постер (если доступен), жанр, описание и кнопку "Посмотреть трейлер".
-3.Добавить кнопки "Показать другой фильм" / "Добавить в избранное".
+## Error Handling
+The bot is equipped with error handling mechanisms to provide feedback to users and ensure smooth operation. In case of an error, the bot will report the issue gracefully without crashing.
 
-3)💤Поиск лучших фильмов по тематике
+## Contribution Guidelines
+- Fork the repository and create a new branch for each feature or bug fix.
+- Ensure tests are written for any new functionality.
+- Submit a pull request describing your changes.
 
-1.Создать меню с выбором жанров (фэнтези, драма, хоррор и др.).
-2.По запросу пользователя отображать топ-5 фильмов из выбранного жанра, отсортированных по рейтингу.
-3.Добавить возможность фильтровать по году выпуска (опционально).
-
-4)🔻Хэндлер для подписки на канал
-
-1.При старте бота проверять, подписан ли пользователь на указанный канал.
-2.Если не подписан, отображать сообщение с просьбой подписаться и кнопкой.
-3.Доступ к функционалу бота открывать только после подписки.
-Хранение пользовательских данных
-
-5)🔻Сохранять в базе:
-ID пользователя.
-Имя.
-Username.
-Возраст (если вводится).
-
-🥶2. Административная часть
-(Ответственный: Илья Смирнов(гений, филантроп, плэйбой и т.д)
-
-1)Управление базой данных⚙️
-
-Создание структуры базы данных для хранения информации о:
-Пользователях.
-Фильмах (название, описание, жанр, код, год, рейтинг).
-Добавление новых фильмов в базу данных через админский интерфейс.
-
-2)Статистика
-
-Вывод статистики:
-1.Прирост пользователей за день.
-2.Общее количество пользователей.
-3.Распределение пользователей по возрастам.
-
-3)Интерфейс кнопок для админа❤
-
-Реализовать меню с кнопками:
-1.Добавить фильм.
-2.Удалить фильм.
-3.Просмотреть статистику.
-4.Поддержка вложенных меню для простоты работы.
-
-4)Функции рассылки⚠️
-
-Запланированная рассылка:
-1.Возможность задавать текст рассылки и время отправки.
-Кнопки в рассылке:
-1.Поддержка добавления кнопок с текстом и ссылками (например, на фильмы или внешние сайты).
-
-5)Реализация хэндлера подписки☕️
-
-Возможность админа задавать канал для проверки подписки и обновлять его в настройках.
-
-
-✅Дополнительные задачи
-
-1)Логирование событий✨
-
-Логировать все действия пользователей и админа:
-1.Ошибки.
-2.Входы в бота.
-3.Выполненные команды.
-
-2)Тестирование и оптимизация✨
-
-1.Провести тесты производительности при большом числе пользователей.
-2.Оптимизировать запросы к базе данных.
+## License
+This project is licensed under the MIT License. See the LICENSE file for more details.
