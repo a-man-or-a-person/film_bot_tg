@@ -8,9 +8,11 @@ import bot.fsm_classes as fsm_cl
 import bot.keyboards.admin_keyboard as kb
 import DB.requests as rq
 import Pydantic.pydantic_validation as val
-from bot.wrappers import admin_authentication
+from bot.wrappers import AdminAuthorization
 
 admin_router = Router()
+admin_router.message.middleware(AdminAuthorization())
+admin_router.callback_query.middleware(AdminAuthorization())
 
 
 class Reg(StatesGroup):
@@ -19,7 +21,6 @@ class Reg(StatesGroup):
 
 
 @admin_router.message(Command("admin"))
-@admin_authentication
 async def admin_panel(message: Message):
     # Use middleware to check if it is admin
     await message.reply("Admin panel", reply_markup=kb.admin_panel)

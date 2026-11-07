@@ -6,7 +6,6 @@ from DB.orm import admin_insert_film, create_tables, insert_workers
 async def main():
     pass
     await create_tables()
-    await insert_workers()
     # await admin_insert_film(**{'name': 'Django', 'source_film': 'https://git'})
 
 

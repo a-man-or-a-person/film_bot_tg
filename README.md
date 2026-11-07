@@ -1,3 +1,5 @@
+![FILM DISCOVERY BOT](docs/banner.svg)
+
 # Film discovery Telegram bot
 
 A Python learning project using aiogram, SQLAlchemy's asynchronous sessions and the Kinopoisk API.
@@ -44,12 +46,12 @@ The entry point is `main.py`; the Telegram library is aiogram.
 
 ## Current limitations
 
-- Administrative callbacks and state handlers do not consistently verify permissions. Do not deploy to untrusted users before fixing authorization throughout these flows.
-- `DB/orm.py:create_tables` drops existing tables before recreating them. Do not use it to initialize a database containing data.
-- SQLite uses a Windows-style path in `DB/database.py`; portability requires a follow-up fix.
+- Administrative message and callback handlers verify current administrator membership on every step. Add the initial administrator only through a trusted database session; there is no public bootstrap command.
+- Startup creates missing tables without dropping existing tables. Runtime SQLite defaults to `.data/user.db`; `DB_PATH` can select another local file. The historical committed database is not used by default.
+- SQLite paths use the platform path library. PostgreSQL requires the documented environment configuration.
 - The repository includes a SQLite database. Its records have not been certified as safe sample data.
-- API requests use synchronous HTTP calls inside asynchronous functions.
-- There is no automated test suite or CI workflow in the default-branch tree reviewed for this documentation.
+- API requests use asynchronous aiohttp sessions, HTTP status checks and a 15-second timeout. API errors currently propagate to the bot framework; user-facing retry messages remain future work.
+- Run `python -m pip install pytest==8.4.1 pytest-asyncio==1.2.0`, then `python -m pytest -q tests`. Checks cover access denial, revoked rights, real callback dispatch and preservation of database records. CI runs the suite on pushes and pull requests.
 
 Previously exposed API credentials require rotation even after removing them from source.
 

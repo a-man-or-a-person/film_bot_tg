@@ -1,3 +1,4 @@
+from bot.wrappers import AdminAuthorization
 from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
@@ -8,6 +9,8 @@ from Pydantic import pydantic_valid_classes as pyd_val
 from Pydantic.pydantic_validation import validate_film
 
 film_router = Router()
+film_router.message.middleware(AdminAuthorization())
+film_router.callback_query.middleware(AdminAuthorization())
 
 
 # Film deletion

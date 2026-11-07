@@ -41,7 +41,7 @@ async def add_film(**kwargs) -> None:
 async def get_random_films(amount: int) -> str:
     async with async_session_factory() as session:
         ids = [x[0] for x in await session.execute(select(FilmOrm.film_id))]
-        random_ids = random.sample(ids, amount)
+        random_ids = random.sample(ids, min(max(amount, 0), len(ids)))
         films = select(FilmOrm.name, FilmOrm.film_id).where(
             FilmOrm.film_id.in_(random_ids)
         )
