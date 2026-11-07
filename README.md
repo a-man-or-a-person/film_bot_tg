@@ -1,45 +1,58 @@
-# Film Bot Telegram
+# Film discovery Telegram bot
 
-## Introduction
-This project is a Telegram bot designed to assist users in discovering and managing their film watching experience. It provides users with film recommendations, information about films, and allows users to track their watched films.
+A Python learning project using aiogram, SQLAlchemy's asynchronous sessions and the Kinopoisk API.
 
-## Features
-- Film recommendations based on user preferences.
-- Search functionality for films and TV shows.
-- Track watched films and manage lists.
-- User-friendly interface with quick commands.
-- Logging for tracking user interactions.
+## Implemented scope
 
-## Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/a-man-or-a-person/film_bot_tg.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd film_bot_tg
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Set up environment variables as needed.
+- Telegram menus for film lookup, ranked selections and random selections.
+- Film catalog operations and administrator management.
+- Pydantic models for API responses and submitted film data.
 
-## Usage
-- Start the bot by running:
-   ```bash
-   python bot.py
-   ```
-- Interact with the bot through your Telegram application using the command `/start` to initiate the conversation.
+The current selection logic is not a trained ML recommender.
 
-## Architecture
-The project follows a modular architecture, separating the command handling, API communication, and database interactions into individual modules. This promotes clear separation of concerns and easier maintenance.
+## Setup
 
-## Technologies
-- Python 3.x
-- [Python Telegram Bot](https://python-telegram-bot.readthedocs.io/)
-- SQLAlchemy for database management
-- Requests for API interactions
+Create and activate a Python virtual environment, then run:
 
-## Database Schema
-The database stores user interactions, film data, and user preferences in structured tables. Ensure the database is initialized before running the bot.
+```sh
+python -m pip install -r requirements.txt
+```
+
+Create a local `.env` (never commit real credentials):
+
+```dotenv
+BOT_TOKEN=
+KINOPOISK_API_KEY=
+SELECTED_DB=SQLITE
+```
+
+For PostgreSQL set `SELECTED_DB=POSTGRES` and provide `DB_NAME`, `DB_PORT`, `DB_HOST`, `DB_PASS` and `DB_USER`.
+Use an isolated demo database and a test bot.
+
+```sh
+python main.py
+```
+
+The entry point is `main.py`; the Telegram library is aiogram.
+
+## Layout
+
+- `bot/handlers/`: user menus, administrative callbacks and film editing states.
+- `apis/kinopoisk.py`: external film API calls.
+- `Pydantic/`: validation models.
+- `DB/`: models, sessions and database requests.
+
+## Current limitations
+
+- Administrative callbacks and state handlers do not consistently verify permissions. Do not deploy to untrusted users before fixing authorization throughout these flows.
+- `DB/orm.py:create_tables` drops existing tables before recreating them. Do not use it to initialize a database containing data.
+- SQLite uses a Windows-style path in `DB/database.py`; portability requires a follow-up fix.
+- The repository includes a SQLite database. Its records have not been certified as safe sample data.
+- API requests use synchronous HTTP calls inside asynchronous functions.
+- There is no automated test suite or CI workflow in the default-branch tree reviewed for this documentation.
+
+Previously exposed API credentials require rotation even after removing them from source.
+
+## License
+
+See [LICENSE](LICENSE). No license terms were changed.

@@ -20,7 +20,6 @@ load_dotenv()
 KINOPOISK_API_KEY = os.getenv("KINOPOISK_API_KEY")
 
 
-# KINOPOISK_API_KEY = '296e88f6-55f1-4f99-9bf4-8d93375773fd'
 
 
 # class UserStates(StatesGroup):
