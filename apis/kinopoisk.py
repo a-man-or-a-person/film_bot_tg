@@ -4,7 +4,7 @@ import random
 import urllib.parse
 
 import dotenv
-import requests
+import aiohttp
 
 from Pydantic.pydantic_valid_classes import APIKinopoiskMovie, KinopoiskFilmOut
 from Pydantic.pydantic_validation import films_sec_val, film_code_val
@@ -30,9 +30,11 @@ async def get_films_by_params(**kwargs) -> list[APIKinopoiskMovie]:
         "accept": "application/json",
         "X-API-KEY": os.getenv("KINOPOISK_API_KEY"),
     }
-    response = requests.get(url, headers=headers)
-    data = await films_sec_val(**response.json())
-    return data
+    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=15)) as session:
+        async with session.get(url, headers=headers) as response:
+            response.raise_for_status()
+            data = await response.json()
+    return await films_sec_val(**data)
 
 
 async def get_film_by_id(**kwargs):
@@ -47,8 +49,11 @@ async def get_film_by_id(**kwargs):
         "accept": "application/json",
         "X-API-KEY": os.getenv("KINOPOISK_API_KEY"),
     }
-    response = requests.get(url, headers=headers)
-    film = APIKinopoiskMovie(**response.json())
+    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=15)) as session:
+        async with session.get(url, headers=headers) as response:
+            response.raise_for_status()
+            data = await response.json()
+    film = APIKinopoiskMovie(**data)
     return await user_string_prep([film])
 
 

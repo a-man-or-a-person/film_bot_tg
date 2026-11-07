@@ -4,8 +4,7 @@ from DB.models import FilmOrm, UserOrm
 
 async def create_tables():
     async with async_engine.connect() as conn:
-        async_engine.echo = True
-        await conn.run_sync(Base.metadata.drop_all)
+        async_engine.echo = False
         await conn.run_sync(Base.metadata.create_all)
         await conn.commit()
 

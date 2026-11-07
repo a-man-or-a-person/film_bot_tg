@@ -14,12 +14,13 @@ load_dotenv()
 if os.getenv("SELECTED_DB") == "POSTGRES":
     async_engine = create_async_engine(
         url=connection_link(),
-        echo=True,
+        echo=False,
     )
 else:
-    path = pathlib.Path(r"DB\user.db").resolve()
+    path = pathlib.Path(os.getenv("DB_PATH", ".data/user.db")).resolve()
+    path.parent.mkdir(parents=True, exist_ok=True)
 
-    async_engine = create_async_engine(url=rf"sqlite+aiosqlite:///{path}", echo=True)
+    async_engine = create_async_engine(url=rf"sqlite+aiosqlite:///{path}", echo=False)
 
 async_session_factory = async_sessionmaker(async_engine)
 

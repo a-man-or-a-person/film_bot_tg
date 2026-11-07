@@ -1,3 +1,4 @@
+from DB.orm import create_tables
 import asyncio
 import logging
 import os
@@ -13,6 +14,7 @@ from bot.handlers.user_handler import user_router
 async def main():
     dotenv.load_dotenv()
     bot = Bot(token=os.getenv("BOT_TOKEN"))
+    await create_tables()
     dp = Dispatcher()
 
     dp.include_router(admin_router)

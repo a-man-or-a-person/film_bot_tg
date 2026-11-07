@@ -1,19 +1,16 @@
-import os
-
-from dotenv import load_dotenv
+from aiogram import BaseMiddleware
+from aiogram.types import CallbackQuery
 
 from DB.requests import get_admins
 
-# Admin checker
 
-
-def admin_authentication(func):
-    async def wrapper(message):
-        load_dotenv()
-        if message.from_user.id in await get_admins():
-            return await func(message)
-        return await message.reply(
-            "Unauthorized access. Only for administrators.", reply=False
-        )
-
-    return wrapper
+class AdminAuthorization(BaseMiddleware):
+    async def __call__(self, handler, event, data):
+        user = event.from_user
+        if user is not None and user.id in await get_admins():
+            return await handler(event, data)
+        if isinstance(event, CallbackQuery):
+            await event.answer("Unauthorized access.", show_alert=True)
+        else:
+            await event.answer("Unauthorized access. Only for administrators.")
+        return None
